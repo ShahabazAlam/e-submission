@@ -1,0 +1,55 @@
+{% extends 'application/base_profile_t.html' %}
+{% block title %}{{ assignment }}{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row mt-1 mb-1">
+      <div class="col-md-12 text-center h2 text-primary p-2 bg-success">
+        {{ assignment.name }}
+      </div>
+        <div class="col-md-6">
+          <div class="col-md-12">
+            <strong> Question </strong>: {{assignment.questions|title}}
+          </div>
+          <div class="col-md-12">
+            <strong> Semester </strong>: {{ assignment.semester }}
+        </div>
+        <div class="col-md-12">
+          <strong> Attachment </strong>: <a href="{{ MEDIA_URL }}/{{assignment.qsfile}}" target="_blank">{{assignment.qsfile}}</a>
+        </div>
+        <div class="col-md-12">
+              <strong> Deadline </strong>: <span class="text-danger">{{ assignment.deadline }}</span>
+        </div>
+      </div>
+
+      <div class="col-md-12 mt-2">
+        {% if sol_set %}
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>SubDate</th>
+              <th>Author</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for sol in sol_set %}
+                  <tr>
+                    <td><a href="{% url 'application:sol_detail_t' sol_id=sol.id %}">{{ sol.title }}</a></td>
+                    <td>{{ sol.submission_date }}</td>
+
+                    <td>{{ sol.student.user.username }}</td>
+                  </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {%else%}
+          <div class="text-center">
+            <h4>data found.</h4> 
+          </div>
+        {% endif %} 
+      </div>
+    </div>
+  </div>
+      
+{% endblock %}

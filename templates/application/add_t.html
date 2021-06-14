@@ -1,0 +1,68 @@
+{% extends 'application/base_profile_t.html' %}
+{% block body %}
+{% load crispy_forms_tags %}
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <div class="panel-body">
+          <div class="col-md-12 text-center h2 text-primary mt-2 p-2 bg-success">
+            <h3 class="text-center">Add an Assignment</h3>
+          </div>
+          <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+          {% if error_message %}
+          <div class="alert alert-danger">
+            <strong>{{ error_message }}</strong>
+          </div>
+          {% endif %}
+          <form class="form-group" action="{% url 'application:add_t' department=department %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  {{form.num|as_crispy_field}}
+                </div>
+                <div class="form-group col-md-4">
+                  {{form.semester|as_crispy_field}}
+                </div>
+                <div class="form-group col-md-4">
+                  {{form.name|as_crispy_field}}
+                </div>
+                <div class="form-group col-md-12">
+                  {{form.questions|as_crispy_field}}
+                </div>
+                <div class="form-group col-md-6">
+                  {{form.deadline|as_crispy_field}}
+                </div>
+                <div class="form-group col-md-6">
+                  <div class="float-right">
+                    {{form.qsfile|as_crispy_field}}
+                  </div>
+                </div>
+
+              <div class="col-md-12">
+                <button type="submit" disabled id="submit_button" class="btn btn-success btn-block">Submit</button>
+              </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+</body>
+<script>
+  $("#id_deadline").on('change',function(){
+    let val = new Date($("#id_deadline").val());
+    var today = new Date();
+    console.log(val === today)
+    if(val >= today){
+      $("#submit_button").prop("disabled", false);
+    }else{
+      $("#submit_button").prop("disabled", true);
+    }
+  })
+</script>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'application/base.html' %}
+{% block title %}Home{% endblock %}
+{% block index_active %}active{% endblock %}
+
+{% block body %}
+
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 offset-md-2 mt-5">
+      <div class="text-center h3 text-warning bg-primary col-md-12">Profile</div>
+      <div class="col-md-12">
+        <div class="col-md-6">
+          <div class="col-md-12">
+            <strong> Full Name </strong>: {{user_profile.full_name|title}}
+          </div>
+          <div class="col-md-12">
+            <strong> Username </strong>: {{user.username|title}}
+          </div>
+          <div class="col-md-12">
+            <strong> Department </strong>: {{user_profile.department|title}}
+          </div>
+        </div>
+      </div>
+      <hr class=" mt-5">
+      <div class="row">
+        <div class="col-md-6">
+          {% for course in course_list %}
+            <a class="btn btn-success" href="{% url 'application:profile' department=user_profile.department %}">Dashboard</a>
+          {% endfor %}
+        </div>
+        <div class="col-md-6">
+          <a class="btn btn-danger float-right" href="{% url 'application:logout' %}"> Log out</a>
+        </div>
+      </div>
+      <hr>
+    </div>
+  </div>
+</div>
+</body>
+{% endblock %}
